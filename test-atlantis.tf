@@ -4,7 +4,7 @@ provider "aws" {
   secret_key              = var.aws_secret_key
 }
 
-# vpc
+# vpc test for atlantis
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 }
