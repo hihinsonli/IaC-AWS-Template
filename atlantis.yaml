@@ -1,20 +1,15 @@
 version: 3
 projects:
-- name: poctest
+- name: myproject
   dir: .
   terraform_version: v1.7.4
   autoplan:
     when_modified: ["*.tf", "*.tfvars"]
     enabled: true
-  workflow: customworkflow
-
-workflows:
-  customworkflow:
-    plan:
-      steps:
-      - init
-      - plan:
-          extra_args: ["-var", "aws_access_key=${var.AWS_ACCESS_KEY_ID}", "-var", "aws_secret_key=${var.AWS_SECRET_ACCESS_KEY}"]
-    apply:
-      steps:
-      - apply
+  extra_arguments:
+    - command_name: plan
+      arguments:
+        - "-var"
+        - "aws_access_key=${var.AWS_ACCESS_KEY_ID}"
+        - "-var"
+        - "aws_secret_key=${var.AWS_SECRET_ACCESS_KEY}"
