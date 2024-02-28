@@ -7,6 +7,19 @@ resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 }
 
+#public subnet
+resource "aws_subnet" "public_subnet_1" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.public_subnet_cidrs[0]
+  availability_zone = var.availability_zones[0]
+}
+
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.public_subnet_cidrs[1]
+  availability_zone = var.availability_zones[1]
+}
+
 variable "vpc_cidr" {
   description = "The CIDR block for the VPC"
   default     = "10.0.0.0/16"
@@ -17,3 +30,20 @@ variable "region" {
   default     = "us-east-2"
   description = "AWS region"
 }
+
+variable "availability_zones" {
+  type        = list(string)
+  default     = ["us-east-2a", "us-east-2b"]
+  description = "List of Availability Zones"
+}
+
+variable "public_subnet_cidrs" {
+  description = "The CIDR blocks for public subnets"
+  default     = ["10.0.1.0/24", "10.0.2.0/24"]
+}
+
+variable "private_subnet_cidrs" {
+  description = "The CIDR blocks for private subnets"
+  default     = ["10.0.3.0/24", "10.0.4.0/24"]
+}
+
